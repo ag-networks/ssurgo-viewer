@@ -6,10 +6,12 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
 import LayerList from '@boundlessgeo/sdk/components/LayerList';
+import InfoPopup from '@boundlessgeo/sdk/components/InfoPopup';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import enLocaleData from 'react-intl/locale-data/en';
 import enMessages from '@boundlessgeo/sdk/locale/en';
-//import applyStyle from 'ol-mapbox-style';
+// TODO: switch styling to ol-mapbox-style
+//import { apply } from 'ol-mapbox-style';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -30,7 +32,7 @@ var baseStyle = new ol.style.Style({
   }),
   stroke: new ol.style.Stroke({
     color: '#999',
-    width: 0.2
+    width: 0.25
   })
 });
 
@@ -62,6 +64,7 @@ var map = new ol.Map({
       ]
     }),
     new ol.layer.VectorTile({
+      // TODO: how do I access this from another part of the app?
       title: 'soils',
       id: 'soils',
       popupInfo: '<strong>[muname]</strong><p>Drainage: [drclassdcd]</p>',
@@ -99,10 +102,12 @@ class MyApp extends React.Component {
   }
   render() {
     return (
+      // TODO: why is this not showing in the react debugger?
        <div id='content'>
         <MapPanel id='map' map={map} />
-        <div id='layer-list'><LayerList collapsible={false} map={map} /></div>
+        <div id='layer-list'><LayerList collapsible={false} allowLabeling={false} map={map}/></div>
         <div id='zoom-buttons'><Zoom map={map} /></div>
+        <div id='popup' className='ol-popup'><InfoPopup toggleGroup='navigation' map={map} /></div>
       </div>
     );
   }
