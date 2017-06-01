@@ -1,32 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>SSURGO viewer</title>
-  <base target="_blank">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" >
-  <link rel="stylesheet" href="node_modules/@boundlessgeo/sdk/dist/css/components.css">
-  <link rel="stylesheet" type="text/css" href="app.css">
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Object.assign"></script>
-</head>
-<body>
-  <div id='main'></div>
-  <!-- This script adds the Roboto font to our project. For more detail go to this site:  http://www.google.com/fonts#UsePlace:use/Collection:Roboto:400,300,500 -->
-  <script>
-    var WebFontConfig = {
-      google: { families: [ 'Roboto:400,300,500:latin' ] }
-    };
-    (function() {
-      var wf = document.createElement('script');
-      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-    })();
-  </script>
-  <script src="/loader.js"></script>
-  <script src="/build/app-debug.js"></script>
-</body>
-</html>
+<html>
+  <head>
+    <title>SSURGO Viewer</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.1.1/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="css/styles.css">
 
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.1.1/build/ol.js"></script>
+    <script src="https://rawgit.com/boundlessgeo/ol-mapbox-style/v0.0.14/dist/olms.js"></script>
+    <script src="app.js"></script>
+    <script src="js/map.js"></script>
+  </body>
+</html>
