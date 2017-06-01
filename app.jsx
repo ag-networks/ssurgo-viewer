@@ -9,7 +9,7 @@ import LayerList from '@boundlessgeo/sdk/components/LayerList';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import enLocaleData from 'react-intl/locale-data/en';
 import enMessages from '@boundlessgeo/sdk/locale/en';
-import applyStyle from 'ol-mapbox-style';
+//import applyStyle from 'ol-mapbox-style';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -20,6 +20,19 @@ injectTapEventPlugin();
 addLocaleData(
   enLocaleData
 );
+
+var gsLayer = 'ssurgo:soil_types';
+var gsLayerEspg = '900913';
+
+var baseStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(186,221,105,0.5)'
+  }),
+  stroke: new ol.style.Stroke({
+    color: '#999',
+    width: 0.2
+  })
+});
 
 var map = new ol.Map({
   controls: [new ol.control.Attribution({collapsible: false})],
@@ -47,13 +60,36 @@ var map = new ol.Map({
           })
         })
       ]
+    }),
+    new ol.layer.VectorTile({
+      title: 'soils',
+      id: 'soils',
+      popupInfo: '<strong>[muname]</strong><p>Drainage: [drclassdcd]</p>',
+      geometryType: 'Polygon',
+      attributes: ['musym', 'muname', 'drclassdcd'],
+      style: baseStyle,
+      source: new ol.source.VectorTile({
+        tilePixelRatio: 1,
+        tileGrid: ol.tilegrid.createXYZ({maxZoom: 19}),
+        format: new ol.format.MVT(),
+        url: 'http://localhost:8080/geoserver/gwc/service/tms/1.0.0/' + gsLayer +
+            '@EPSG%3A' + gsLayerEspg + '@pbf/{z}/{x}/{-y}.pbf'
+      })
     })
   ],
   view: new ol.View({
-    center: [0, 0],
-    zoom: 4
+    center: ol.proj.transform([-76.9347, 40.8104], 'EPSG:4326', 'EPSG:3857'),
+    zoom: 12
   })
 });
+
+// fetch('mb-styles/drainage.json').then(function(response) {
+//     response.json().then(function(glStyle) {
+//         olms.applyStyle(soils, glStyle, 'map-units').then(function() {
+//             map.addLayer(soils);
+//         });
+//     });
+// });
 
 class MyApp extends React.Component {
   getChildContext() {
