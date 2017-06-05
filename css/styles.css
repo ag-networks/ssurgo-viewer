@@ -25,8 +25,11 @@ html, body, #map {
 
 .style-picker {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 280px;
   background-color: white;
   -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
   filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
@@ -37,7 +40,7 @@ html, body, #map {
 }
 
 #style-options {
-  width: 220px;
+  width: 250px;
 }
 
 .ol-popup {
@@ -128,4 +131,13 @@ html, body, #map {
 
 .legend-item {
   padding: 5px 0;
+}
+
+.layer-switcher {
+  top: 0.5em;
+}
+
+.layer-switcher li.layer label, .layer-switcher li.layer input {
+    display: table-cell;
+    vertical-align: baseline;
 }

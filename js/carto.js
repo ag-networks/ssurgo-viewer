@@ -21,7 +21,7 @@ var glStyle = {
       "type": "line",
       "source": "Default",
       "paint": {
-        "line-color": "#fff",
+        "line-color": "#bbbebf",
         "line-width": 0.1
       }
     },
