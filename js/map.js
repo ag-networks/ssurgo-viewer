@@ -41,7 +41,7 @@ var map = new ol.Map({
           })
         }),
         new ol.layer.Tile({
-          title: 'Stamen Toner Lite',
+          title: 'Stamen Toner',
           type: 'base',
           visible: 'true',
           source: new ol.source.Stamen({ layer: "toner" })
