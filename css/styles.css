@@ -16,6 +16,7 @@ html {
               box-sizing: inherit;
   }
 
+/* General layout */
 html, body, #map {
   font-family: sans-serif;
   width: 100%;
@@ -23,6 +24,7 @@ html, body, #map {
   position: relative;
 }
 
+/* Map style picker */
 .style-picker {
   position: absolute;
   top: 10px;
@@ -43,6 +45,7 @@ html, body, #map {
   width: 250px;
 }
 
+/* Info popup */
 .ol-popup {
   position: absolute;
   background-color: white;
@@ -102,6 +105,7 @@ html, body, #map {
   font-weight: bold;
 }
 
+/* Map legend */
 .hidden {
   display: none;
 }
@@ -133,6 +137,7 @@ html, body, #map {
   padding: 5px 0;
 }
 
+/* These styles override the ol3-layerswitcher.css styles */
 .layer-switcher {
   top: 0.5em;
 }

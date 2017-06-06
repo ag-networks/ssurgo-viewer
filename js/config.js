@@ -1,8 +1,13 @@
 var config = {
 
+  // The Geoserver VectorTile Layer and EPSG
   gsLayer: 'ssurgo:soil_types',
   gsLayerEspg: '900913',
-  nameField: 'musym',
+  
+  // The primary name field, used in the info popup
+  nameField: 'muname',
+  
+  // Display fields for the info popup
   displayFields: [
     {
       title: 'Flooding Frequency',
@@ -30,6 +35,8 @@ var config = {
       unit: '%'
     },
   ],
+  
+  // Mapbox GL cartographic styles
   glStyle: {
     "version": 8,
     "name": "soil-styles",

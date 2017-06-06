@@ -1,16 +1,28 @@
-var View = function(){
+// Configurable Geoserver Vector Tile Viewer
+
+// Accepts one Geoserver Vector Tile polygon layer, along with 
+// configuration options and multiple Mapbox GL styles. 
+// This app loops through the styles, uses the name of the style within 
+// the style picker, and applies the style on the client side.
+// Also in the config.js file are the display fields that the
+// info popup uses to display feature information.
+
+var VectorTileViewer = function(){
   var self = this;
   
+  // Build a list of styles and populate the style picker select options
   self.listStyles = function() {
     var stylesList = [];
     var stylePicker = document.getElementById("style-options");
 
+    // Loop through the cartographic styles and look for distinct style defs
     config.glStyle.layers.forEach(function(style) {
       if (!stylesList.includes(style.source)) {
         stylesList.push(style.source);
       }
     });
 
+    // Populate the select options
     for (var i = 0; i < stylesList.length; i++) {
       stylePicker.options[stylePicker.options.length] = new Option(stylesList[i], stylesList[i]);
     }
@@ -20,6 +32,7 @@ var View = function(){
     });
   }
 
+  // Define the main Geoserver VectorTile layer
   this.vTiles = new ol.layer.VectorTile({
     source: new ol.source.VectorTile({
       tilePixelRatio: 1,
@@ -30,6 +43,9 @@ var View = function(){
     })
   });
 
+  // Set up the OpenLayers map
+  // This section isn't included in the config file, but updating base maps, center
+  // and zoom is pretty straightforward to do here.
   self.map = new ol.Map({
     target: 'map',
     view: new ol.View({
@@ -53,17 +69,6 @@ var View = function(){
               url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             })
           }),
-          // TODO: Figure out if it's possible to use this - they don't support 3857
-          // https://nassgeodata.gmu.edu/CropScape/
-          // new ol.layer.Tile({
-          //   title: 'CropData Imagery',
-          //   type: 'base',
-          //   visible: 'false',
-          //   source: new ol.source.TileWMS({
-          //     url: 'https://nassgeodata.gmu.edu/CropScapeService/wms_cdlall.cgi?',
-          //       params: { 'LAYERS': 'cdl_2016', 'SRS': 'EPSG:3857' }
-          //   })
-          // }),
           new ol.layer.Tile({
             title: 'Stamen Toner',
             type: 'base',
@@ -72,10 +77,12 @@ var View = function(){
           })
         ]
       }),
+      // Include the VectorTile layer
       self.vTiles
     ]
   });
 
+  // Add controls and overlays to the map
   self.layerSwitcher = new ol.control.LayerSwitcher();
   self.popup = new ol.Overlay({
     element: document.getElementById('popup'),
@@ -86,28 +93,40 @@ var View = function(){
   self.map.addControl(self.layerSwitcher);
   self.map.addOverlay(self.popup);
 
+  // Interactivity for map and popup
   self.map.on('click', function(e) {
-    //popup.setPosition(e.coordinate);
     self.displayFeatureInfo(e.pixel, e.coordinate);
   });
 
+  self.closer = document.getElementById('popup-closer');
+  self.closer.onclick = function() {
+    self.popup.setPosition(undefined);
+    closer.blur();
+    return false;
+  };
+
+  // VectorTile styling
   self.styleVTiles = function(style) {
     olms.applyStyle(this.vTiles, config.glStyle, style);
     self.updateLegend(style);
   }
 
+  // Query the map data and populate the info popup
   self.displayFeatureInfo = function(pixel, coordinate) {
 
     self.map.forEachFeatureAtPixel(pixel, function(feature) {
+      // Only run if there's actually data at the clicked location
       if (feature) {
 
+        // Set up the container and content
         var container = document.getElementById('popup-content');
         var content = '';
 
-        content += '<h3 id="popup-title">' + feature.get('muname') + '</h3>';
+        content += '<h3 id="popup-title">' + feature.get(config.nameField) + '</h3>';
         content += '<ul id="content-items">';
 
         var fields = config.displayFields;
+        // Build all the display field info
         for (var i=0; i < fields.length; i++) {
           content += '<li class="content-item">' +
             fields[i].title + ': <span id="content-flooding">' +
@@ -118,20 +137,18 @@ var View = function(){
         content += '</ul>';
 
         container.innerHTML = content;
+        
+        // Once it's all set, display the popup
         self.popup.setPosition(coordinate);
-        var closer = document.getElementById('popup-closer');
-        closer.onclick = function() {
-          self.popup.setPosition(undefined);
-          closer.blur();
-          return false;
-        };
       }
     })
   };
   
+  // Display the appropriate map style info in the legend
   self.updateLegend = function(style) {
     var legend = document.getElementById("legend");
 
+    // Hide the legend if there's nothing interesting to show
     if (style == 'Default') {
       legend.classList.add('hidden');
     }
@@ -165,6 +182,7 @@ var View = function(){
     }
   }
 
+  // Run necessary functions to get things going
   self.init = function(){
     self.listStyles();
     self.styleVTiles('Default');
@@ -172,6 +190,8 @@ var View = function(){
 
 };
 
-var view = new View();
+// Instantiate the app
+var app = new VectorTileViewer();
 
-view.init();
+// Aaaannnnd... go
+app.init();
