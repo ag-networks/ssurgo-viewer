@@ -38,7 +38,7 @@ var VectorTileViewer = function(){
       tilePixelRatio: 1,
       tileGrid: ol.tilegrid.createXYZ({maxZoom: 19}),
       format: new ol.format.MVT(),
-      url: 'http://localhost:8080/geoserver/gwc/service/tms/1.0.0/' + config.gsLayer +
+      url: config.urlBase + 'geoserver/gwc/service/tms/1.0.0/' + config.gsLayer +
           '@EPSG%3A' + config.gsLayerEspg + '@pbf/{z}/{x}/{-y}.pbf'
     })
   });
