@@ -101,7 +101,7 @@ var VectorTileViewer = function(){
   self.closer = document.getElementById('popup-closer');
   self.closer.onclick = function() {
     self.popup.setPosition(undefined);
-    closer.blur();
+    self.closer.blur();
     return false;
   };
 

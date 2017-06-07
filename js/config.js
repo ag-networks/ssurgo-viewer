@@ -5,7 +5,7 @@ var config = {
   gsLayerEspg: '900913',
 
   // The URL base of the Geoserver instance
-  urlBase: 'http://localhost:8080/'
+  urlBase: 'http://localhost:8080/',
   
   // The primary name field, used in the info popup
   nameField: 'muname',
