@@ -72,8 +72,19 @@ var VectorTileViewer = function(){
           new ol.layer.Tile({
             title: 'Stamen Toner',
             type: 'base',
-            visible: 'true',
+            visible: 'false',
             source: new ol.source.Stamen({ layer: "toner" })
+          }),
+          new ol.layer.Tile({
+            title: 'Positron',
+            type: 'base',
+            visible: 'true',
+            source: new ol.source.XYZ({
+              url: 'http://s.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+              attributions: [
+                new ol.Attribution({ html: ['&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>']})
+              ]
+            })
           })
         ]
       }),
