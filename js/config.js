@@ -1,11 +1,14 @@
 var config = {
 
   // The Geoserver VectorTile Layer and EPSG
-  gsLayer: 'ssurgo:soil_types',
+  gsLayer: 'ssurgo:soil_types', // dev
+  // gsLayer: 'geoplatform:ssurgo_test', //prod
   gsLayerEspg: '900913',
 
-  // The URL base of the Geoserver instance
+  // The URL base of the dev Geoserver instance
   urlBase: 'http://localhost:8080/',
+  // The URL base of the prod Geoserver instance
+  // urlBase: '../',
   
   // The primary name field, used in the info popup
   nameField: 'muname',
@@ -49,35 +52,6 @@ var config = {
       }
     },
     "layers": [
-      {
-        "id": "default-fill",
-        "type": "fill",
-        "source": "Default",
-        "paint": {
-          "fill-color": "#fff",
-          "fill-opacity": 0.1
-        }
-      },
-      {
-        "id": "default-outlines",
-        "type": "line",
-        "source": "Default",
-        "paint": {
-          "line-color": "#bbbebf",
-          "line-width": 0.1
-        }
-      },
-      {
-        "id": "symbols",
-        "type": "fill",
-        "source": "Default",
-        "minzoom": 15,
-        "layout": {
-          "text-field": "{musym}",
-          "text-size": 10,
-          "text-font": ["Arial Normal", "sans-serif Normal"]
-        }
-      },
       {
         "id": "very-poor",
         "type": "fill",
@@ -480,6 +454,35 @@ var config = {
         "paint": {
           "line-color": "#bbbebf",
           "line-width": 0.1
+        }
+      },
+      {
+        "id": "default-fill",
+        "type": "fill",
+        "source": "Borders and Labels",
+        "paint": {
+          "fill-color": "#fff",
+          "fill-opacity": 0.1
+        }
+      },
+      {
+        "id": "default-outlines",
+        "type": "line",
+        "source": "Borders and Labels",
+        "paint": {
+          "line-color": "#bbbebf",
+          "line-width": 0.1
+        }
+      },
+      {
+        "id": "symbols",
+        "type": "fill",
+        "source": "Borders and Labels",
+        "minzoom": 15,
+        "layout": {
+          "text-field": "{musym}",
+          "text-size": 10,
+          "text-font": ["Arial Normal", "sans-serif Normal"]
         }
       }
     ]

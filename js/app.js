@@ -33,7 +33,7 @@ var VectorTileViewer = function(){
   }
 
   // Define the main Geoserver VectorTile layer
-  this.vTiles = new ol.layer.VectorTile({
+  self.vTiles = new ol.layer.VectorTile({
     source: new ol.source.VectorTile({
       tilePixelRatio: 1,
       tileGrid: ol.tilegrid.createXYZ({maxZoom: 19}),
@@ -49,8 +49,9 @@ var VectorTileViewer = function(){
   self.map = new ol.Map({
     target: 'map',
     view: new ol.View({
-      center: ol.proj.transform([-76.9347, 40.8104], 'EPSG:4326', 'EPSG:3857'),
-      zoom: 13
+      center: [-10481528, 5326812],
+      zoom: 14,
+      minZoom: 12
     }),
     layers: [
       new ol.layer.Group({
@@ -100,6 +101,18 @@ var VectorTileViewer = function(){
     autoPan: true,
     autoPanAnimation: { duration: 250 }
   });
+
+  //Instantiate with some options and add the Control
+  self.geocoder = new Geocoder('nominatim', {
+    provider: 'photon',
+    lang: 'en',
+    placeholder: 'Search for ...',
+    limit: 5,
+    debug: true,
+    autoComplete: true,
+    keepOpen: false
+  });
+  self.map.addControl(self.geocoder);
 
   self.map.addControl(self.layerSwitcher);
   self.map.addOverlay(self.popup);
@@ -196,7 +209,7 @@ var VectorTileViewer = function(){
   // Run necessary functions to get things going
   self.init = function(){
     self.listStyles();
-    self.styleVTiles('Default');
+    self.styleVTiles('Drainage');
   };
 
 };
