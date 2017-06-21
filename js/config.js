@@ -5,10 +5,8 @@ var config = {
   // gsLayer: 'geoplatform:ssurgo_test', //prod
   gsLayerEspg: '900913',
 
-  // The URL base of the dev Geoserver instance
-  urlBase: 'http://localhost:8080/',
-  // The URL base of the prod Geoserver instance
-  // urlBase: '../',
+  // The URL base of the server Geoserver instance
+  urlBase: '../',
   
   // The primary name field, used in the info popup
   nameField: 'muname',

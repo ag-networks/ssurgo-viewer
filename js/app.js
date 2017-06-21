@@ -49,7 +49,8 @@ var VectorTileViewer = function(){
   self.map = new ol.Map({
     target: 'map',
     view: new ol.View({
-      center: [-10481528, 5326812],
+      // center: [-10481528, 5326812], // prod
+      center: ol.proj.transform([-76.9347, 40.8104], 'EPSG:4326', 'EPSG:3857'),
       zoom: 14,
       minZoom: 12
     }),
